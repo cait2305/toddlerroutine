@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toddler Day</title>
+<meta name="theme-color" content="#fff0a8">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Toddler Day">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{
+  --cream:#fff9e9; --ink:#3e4262; --muted:#74758a;
+  --yellow:#ffd95c; --blue:#8fd3ff; --green:#9ee2b8;
+  --pink:#ff9fc3; --purple:#c5a8ff; --orange:#ffb36b;
+  --shadow:0 8px 0 rgba(78,75,110,.08),0 14px 28px rgba(78,75,110,.09);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;font-family:"Trebuchet MS",system-ui,sans-serif;color:var(--ink);
+  background-color:var(--cream);
+  background-image:
+    radial-gradient(circle at 20px 20px,#ffd95c55 3px,transparent 4px),
+    radial-gradient(circle at 70px 55px,#8fd3ff44 3px,transparent 4px);
+  background-size:90px 90px;
+}
+.app{max-width:780px;margin:auto;padding:20px 15px 70px}
+.hero{
+  position:relative;overflow:hidden;text-align:center;padding:32px 20px 27px;
+  border:4px solid #fff;border-radius:34px;
+  background:linear-gradient(135deg,#fff0a8,#ffd4e5 48%,#c9f2ff);
+  box-shadow:var(--shadow);margin-bottom:18px
+}
+.hero:before,.hero:after{content:"★";position:absolute;font-size:36px;color:#fff8}
+.hero:before{left:25px;top:18px;transform:rotate(-15deg)}
+.hero:after{right:25px;bottom:18px;transform:rotate(18deg)}
+.hero .sun{font-size:54px;filter:drop-shadow(0 4px 0 #ffffffaa)}
+.hero h1{font-size:34px;margin:3px 0 5px;letter-spacing:.3px}
+.hero p{max-width:560px;margin:auto;color:#5f6078;font-size:15px;line-height:1.5}
+.progress-card,.section{
+  background:#fff;border:3px solid #f3eef8;border-radius:28px;
+  padding:18px;box-shadow:var(--shadow);margin:17px 0
+}
+.progress-top{display:flex;justify-content:space-between;gap:12px;font-weight:800}
+.bar{height:15px;background:#eeeaf3;border-radius:99px;overflow:hidden;margin-top:12px;border:2px solid #fff}
+.fill{height:100%;width:0;background:linear-gradient(90deg,var(--pink),var(--yellow),var(--green),var(--blue),var(--purple));transition:.25s}
+h2{font-size:21px;margin:4px 0 14px}
+.item{
+  display:grid;grid-template-columns:50px 1fr auto;gap:12px;align-items:center;
+  padding:13px 8px;border-bottom:2px dashed #eeeaf2
+}
+.item:last-child{border-bottom:0}
+.icon{
+  width:48px;height:48px;border-radius:16px;display:grid;place-items:center;
+  font-size:24px;border:3px solid #fff;box-shadow:0 3px 0 #e8e5ef
+}
+.morning .icon{background:var(--yellow)} .play .icon{background:var(--green)}
+.food .icon{background:#ffc4a4} .quiet .icon{background:var(--purple)}
+.outside .icon{background:var(--blue)}
+.time{font-size:12px;color:#8a739b;font-weight:900;letter-spacing:.03em}
+.name{font-weight:900;margin-top:2px}.detail{font-size:13px;color:var(--muted);margin-top:3px;line-height:1.4}
+input[type=checkbox]{width:26px;height:26px;accent-color:#8d72d8;cursor:pointer}
+.tip{
+  border:3px dashed #cde9df;border-radius:22px;padding:16px;
+  background:#f0fff9;margin-top:14px;line-height:1.5;font-size:14px
+}
+.words{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.word{padding:8px 12px;border-radius:99px;background:#fff;border:2px solid #ddd4f5;font-weight:900;font-size:13px}
+.controls{display:flex;gap:10px;margin-top:14px}
+button{
+  border:3px solid #fff;border-radius:16px;padding:11px 16px;
+  background:linear-gradient(135deg,#ffe47e,#ffc1d7);color:var(--ink);
+  font-weight:900;cursor:pointer;box-shadow:0 4px 0 #e8d8b8
+}
+.done{text-decoration:line-through;opacity:.5}
+.meal-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.meal-card{border-radius:22px;padding:15px;border:3px solid #fff;box-shadow:0 5px 0 #eeeaf2}
+.meal-card:nth-child(1){background:#fff0a8}.meal-card:nth-child(2){background:#c8f1df}
+.meal-card:nth-child(3){background:#decfff}.meal-card:nth-child(4){background:#cbeaff}
+.meal-card h3{margin:0 0 9px;font-size:17px}.meal-card ul{padding-left:19px;margin:0;color:#606178;font-size:13px;line-height:1.6}
+.meal-note{margin-top:14px;padding:14px 16px;border-radius:19px;background:#ffe5ef;border:3px dashed #ffc0d6;color:#626176;font-size:13px;line-height:1.5}
+.footer{text-align:center;color:#77758b;font-size:13px;margin-top:26px;font-weight:700}
+@media(max-width:520px){
+ .hero h1{font-size:28px}.app{padding:13px 10px 55px}.item{padding:12px 4px}
+ .meal-grid{grid-template-columns:1fr}.hero:before,.hero:after{font-size:25px}
+}
+</style>
+</head>
+<body>
+<main class="app">
+  <section class="hero">
+    <div class="sun">☀️</div>
+    <h1>Our Toddler Day</h1>
+    <p>Play, meals, wiggles, stories, rest and lots of little moments together.</p>
+  </section>
+
+  <section class="progress-card">
+    <div class="progress-top"><span>Today's rhythm</span><span id="count">0 / 17</span></div>
+    <div class="bar"><div class="fill" id="fill"></div></div>
+    <div class="controls"><button id="reset">Start a new day</button></div>
+  </section>
+
+  <section class="section">
+    <h2>🌤️ Morning</h2>
+    <div id="schedule"></div>
+  </section>
+
+  <section class="section">
+    <h2>🕒 Our new sleep & meal rhythm</h2>
+    <div class="tip"><strong>7:30 AM wake → 8:30 PM last snack → 9:30 PM sleep.</strong><br>
+    With breakfast around 7:30–8:00 AM the next morning, the overnight food gap is about 11–11½ hours.
+    The hour between his evening snack and sleep also gives him time to settle after eating.</div>
+  </section>
+
+  <section class="section">
+    <h2>💬 Little language moments</h2>
+    <div class="tip">
+      You don't have to make the whole day speech practice. Try three relaxed 10–15 minute
+      periods of face-to-face play. Follow his interests, use short phrases, then pause so he
+      has a chance to communicate with a look, gesture, sound, sign, point or word attempt.
+      <div class="words">
+        <span class="word">more</span><span class="word">help</span><span class="word">open</span>
+        <span class="word">go</span><span class="word">stop</span><span class="word">up</span>
+        <span class="word">down</span><span class="word">eat</span><span class="word">drink</span>
+        <span class="word">yes</span><span class="word">no</span><span class="word">all done</span>
+      </div>
+    </div>
+    <div class="tip"><strong>Easy car game:</strong> “Car. Go!” → push the car → “Stop!” →
+      “Go!” → pause → “More?” → wait for any communication attempt → “More car!”</div>
+  </section>
+
+
+  <section class="section">
+    <h2>🍓 Easy meal ideas</h2>
+    <div class="meal-grid">
+      <div class="meal-card">
+        <h3>🌞 Breakfast</h3>
+        <ul>
+          <li>Oatmeal + mashed banana</li>
+          <li>Scrambled egg + soft fruit</li>
+          <li>Greek yogurt + mashed berries</li>
+          <li>Toast strips + avocado</li>
+          <li>Mini pancakes + fruit</li>
+        </ul>
+      </div>
+      <div class="meal-card">
+        <h3>🥪 Lunch</h3>
+        <ul>
+          <li>Mac & cheese + soft peas</li>
+          <li>Avocado + soft scrambled egg</li>
+          <li>Soft pasta + tomato sauce</li>
+          <li>Mashed beans + avocado</li>
+          <li>Grilled cheese strips + soft fruit</li>
+        </ul>
+      </div>
+      <div class="meal-card">
+        <h3>🍽️ Dinner</h3>
+        <ul>
+          <li>Flaked salmon + mashed potato</li>
+          <li>Rice + beans + avocado</li>
+          <li>Soft meatball + pasta</li>
+          <li>Egg + sweet potato mash</li>
+          <li>Family meal adapted to a soft texture</li>
+        </ul>
+      </div>
+      <div class="meal-card">
+        <h3>🍌 Snacks</h3>
+        <ul>
+          <li>Banana + strawberry mash</li>
+          <li>Greek yogurt</li>
+          <li>Applesauce</li>
+          <li>Soft ripe pear or peach</li>
+          <li>Soft muffin pieces</li>
+        </ul>
+      </div>
+    </div>
+    <div class="meal-note"><strong>Keep it low-pressure:</strong> These are idea banks, not a menu you have to follow. With a child who is still learning new textures, serve foods in a texture and size he can currently manage safely and introduce new textures gradually.</div>
+  </section>
+
+  <div class="footer">🌈 A happy rhythm, not a perfect schedule. 🧸</div>
+</main>
+
+<script>
+const tasks = [
+["7:30 AM","☀️","Wake up","Diaper/potty, get dressed and morning cuddles","morning"],
+["7:30–8:00 AM","🍳","Breakfast","Breakfast + water","food"],
+["8:30 AM","🧸","Free play","Independent play and exploring","play"],
+["9:00 AM","💬","Together time","Books, songs, talking or pretend play","play"],
+["9:30 AM","🏃","Active play","Outside, playground, walking, dancing or climbing","outside"],
+["10:30 AM","🍓","Morning snack","Snack + water","food"],
+["11:00 AM","🎨","Simple activity","Blocks, coloring, puzzles, busy book or sensory play","play"],
+["11:30 AM","🧺","Free play + chores","Play nearby or help with simple household tasks","play"],
+["12:00 PM","🥪","Lunch","Lunch + water","food"],
+["12:30 PM","📚","Nap wind-down","Books, cuddling and quiet play","quiet"],
+["1:00–3:00 PM","😴","Nap","Rest and recharge","quiet"],
+["3:00 PM","🍌","Afternoon snack","Snack + water and reconnect","food"],
+["3:30 PM","🚗","Interactive play","Cars, animals, bubbles, ball or pretend food","play"],
+["4:15 PM","🌳","Active play","Outside time and big-body movement","outside"],
+["5:15 PM","🧸","Independent play","Play while parent gets things done","play"],
+["6:30 PM","🍽️","Dinner","Family meal + water","food"],
+["7:00 PM","👨‍👩‍👦","Family play","Relaxed play, music, books or time together","play"],
+["8:30 PM","🍓","Evening snack","Last food of the day; keep it simple and filling","food"],
+["8:45 PM","🛁","Bedtime routine","Brush teeth after snack, pajamas, books and cuddles","quiet"],
+["9:30 PM","🌙","Sleep","Aim for about 10 hours overnight","quiet"]
+];
+
+const box=document.getElementById("schedule");
+tasks.forEach((t,i)=>{
+ const row=document.createElement("div"); row.className=`item ${t[4]}`;
+ row.innerHTML=`<div class="icon">${t[1]}</div><div><div class="time">${t[0]}</div>
+ <div class="name">${t[2]}</div><div class="detail">${t[3]}</div></div>
+ <input type="checkbox" aria-label="Complete ${t[2]}" data-i="${i}">`;
+ box.appendChild(row);
+});
+const checks=[...document.querySelectorAll('input[type=checkbox]')];
+function update(){
+ const n=checks.filter(x=>x.checked).length;
+ document.getElementById("count").textContent=`${n} / ${checks.length}`;
+ document.getElementById("fill").style.width=(n/checks.length*100)+"%";
+ checks.forEach(x=>x.closest(".item").classList.toggle("done",x.checked));
+ localStorage.setItem("toddlerRoutine",JSON.stringify(checks.map(x=>x.checked)));
+}
+try{
+ const saved=JSON.parse(localStorage.getItem("toddlerRoutine")||"[]");
+ checks.forEach((x,i)=>x.checked=!!saved[i]);
+}catch(e){}
+checks.forEach(x=>x.addEventListener("change",update));
+document.getElementById("reset").onclick=()=>{checks.forEach(x=>x.checked=false);update()};
+update();
+</script>
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('./service-worker.js'));
+}
+</script>
+</body>
+</html>
